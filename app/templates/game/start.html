@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Start Game{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Start a New Guessing Game</h2>
+
+    {# Flash messages #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ category }}" role="alert">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.level.label(class="form-label") }}
+        {{ form.level(class="form-control") }}
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">{{ form.submit.label.text }}</button>
+    </form>
+  </div>
+{% endblock %}

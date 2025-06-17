@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>My Profile</h2>
+
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <ul class="list-group">
+          <li class="list-group-item">Total Games Played: <strong>{{ total_games }}</strong></li>
+          <li class="list-group-item">Total Wins: <strong>{{ wins }}</strong></li>
+          <li class="list-group-item">Best Score: <strong>{{ best_score }}</strong></li>
+        </ul>
+      </div>
+      <div class="col-md-8">
+        <h4>Recent Games</h4>
+        {% if recent_games %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Level</th>
+                <th>Attempts</th>
+                <th>Score</th>
+                <th>Result</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for game in recent_games %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ game.level }}</td>
+                  <td>{{ game.attempts }} / {{ game.max_attempts }}</td>
+                  <td>{{ game.score }}</td>
+                  <td>{{ 'Won' if game.won else 'Lost' }}</td>
+                  <td>
+                    {% if game.finished_at %}
+                      {{ game.finished_at.strftime('%Y-%m-%d %H:%M') }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No games played yet. <a href="{{ url_for('game.start_game') }}">Start one now</a>!</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

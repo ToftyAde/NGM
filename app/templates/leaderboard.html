@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h2>Leaderboard</h2>
+  {% if games %}
+    <div class="table-responsive">
+      <table class="table table-hover mt-3">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Level</th>
+            <th>Attempts</th>
+            <th>Score</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for game in games %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ game.player.username }}</td>
+            <td>{{ game.level }}</td>
+            <td>{{ game.attempts }} / {{ game.max_attempts }}</td>
+            <td>{{ game.score }}</td>
+            <td>{{ game.finished_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="mt-3">No completed games yet. <a href="{{ url_for('game.start_game') }}">Play now</a> to get on the leaderboard!</p>
+  {% endif %}
+</div>
+{% endblock %}

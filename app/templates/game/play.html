@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Play Game{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Guess the Number (Level: {{ game.level }})</h2>
+
+    {# Flash messages for hints and errors #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ category }}" role="alert">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <p>Attempts: {{ game.attempts }} / {{ game.max_attempts }}</p>
+
+    <form method="post">
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.guess.label(class="form-label") }}
+        {{ form.guess(class="form-control", placeholder="Enter your guess...") }}
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">Submit Guess</button>
+    </form>
+  </div>
+{% endblock %}

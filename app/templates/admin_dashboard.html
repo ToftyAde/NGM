@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Admin Dashboard</h2>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="card-text display-4">{{ total_users }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Games Played</h5>
+          <p class="card-text display-4">{{ total_games }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-info mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Active Sessions</h5>
+          <p class="card-text display-4">{{ active_sessions }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Pending Messages</h5>
+          <p class="card-text display-4">{{ pending_messages }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mt-5">Recent Games</h3>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Attempts</th>
+          <th>Date</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in recent_games %}
+        <tr>
+          <td>{{ game.user.username }}</td>
+          <td>{{ game.attempts }}</td>
+          <td>{{ game.played_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td>{{ 'Won' if game.won else 'Lost' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="mt-5">User Management</h3>
+  <a href="{{ url_for('admin.user_list') }}" class="btn btn-outline-secondary mb-3">View All Users</a>
+</div>
+{% endblock %}

@@ -1,0 +1,236 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: #2c2c2c;
+  background: #f5f5f5;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: #ff6f61;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #e65b50;
+}
+
+/* Container Full-Width Override */
+.container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+/* Navbar */
+.navbar {
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.navbar .navbar-brand {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2c2c2c !important;
+}
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+}
+.navbar .navbar-nav .nav-link {
+  color: #555 !important;
+  margin: 0 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .active > .nav-link {
+  color: #ff6f61 !important;
+}
+
+/* Hero Section (Home Page) */
+.hero {
+  background: #ff6f61;
+  color: #ffffff;
+  padding: 4rem 2rem;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.hero img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 1.5rem;
+}
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto 1.5rem;
+}
+.hero .btn {
+  background: #2c2c2c;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+  display: inline-block;
+  margin-top: 1rem;
+}
+.hero .btn:hover {
+  background: #1f1f1f;
+}
+
+/* Section Background Pattern */
+.section {
+  position: relative;
+  background: #ffffff url('../images/section_pattern.svg') repeat;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Difficulty Icons Alignment */
+.section .d-flex img {
+  width: 48px;
+  height: 48px;
+  margin-right: 12px;
+}
+
+/* Divider Icon */
+.divider {
+  text-align: center;
+  margin: 2rem 0;
+}
+.divider img {
+  width: 200px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Headings & Text */
+h1, h2, h3, h4 {
+  margin-bottom: 1rem;
+  color: #2c2c2c;
+}
+p {
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+.btn-primary {
+  background: #ff6f61;
+  border: none;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #e65b50;
+}
+.btn-secondary {
+  background: #2c2c2c;
+  border: none;
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: #1f1f1f;
+}
+
+/* Cards & Game Containers */
+.card, .game-container {
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  background: #ffffff;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+.table thead {
+  background: #2c2c2c;
+}
+.table thead th {
+  color: #fff;
+  padding: 1rem;
+}
+.table th, .table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+}
+.table-hover tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* Forms */
+.form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-control:focus {
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 0.2rem rgba(255, 111, 97, 0.25);
+}
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+.alert-success {
+  background-color: #e6f4ea;
+  color: #1b4620;
+  border: 1px solid #b0d5ad;
+}
+.alert-danger {
+  background-color: #fdecea;
+  color: #611a15;
+  border: 1px solid #f5c6cb;
+}
+
+/* Footer */
+.footer {
+  background: transparent;
+  text-align: center;
+  padding: 2rem 0;
+  color: #555;
+  font-size: 0.9rem;
+}
