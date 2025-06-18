@@ -1,56 +1,55 @@
 import random
-from datetime import datetime
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from sqlalchemy import desc
-
-from app.extensions import db
+from app.forms.forms import GameForm, GuessForm
 from app.models.game import Game
-from app.forms.game_form import GameForm
-from app.forms.guess_form import GuessForm
+from app.extensions import db
 
-# Blueprint for game routes
-game_bp = Blueprint('game', __name__, template_folder='templates/game')
+game_bp = Blueprint('game', __name__, url_prefix='/game')
 
 @game_bp.route('/start', methods=['GET', 'POST'])
 @login_required
 def start_game():
     """
-    Start a new guessing game by selecting a level.
+    Display and process the new game form.
     """
     form = GameForm()
     if form.validate_on_submit():
         level = form.level.data
-        # determine target range
-        ranges = {'Low': 100, 'Moderate': 1000, 'Expert': 10000}
-        target_range = ranges.get(level, 100)
-        target = random.randint(0, target_range - 1)
+        # Define ranges & max attempts per level
+        config = {
+            'easy':   {'range': (0, 99),   'max_attempts': 10},
+            'medium': {'range': (0, 999),  'max_attempts': 10},
+            'expert': {'range': (0, 9999), 'max_attempts': 10},
+        }[level]
 
-        # Create and save new game using player_id
+        low, high = config['range']
+        secret = random.randint(low, high)
+
+        # Create a new Game, using 'target' not 'secret_number'
         game = Game(
             player_id=current_user.id,
             level=level,
-            target=target,
+            target=secret,
             attempts=0,
-            max_attempts=10,
-            won=False,
-            finished_at=None
+            max_attempts=config['max_attempts']
         )
         db.session.add(game)
         db.session.commit()
-        return redirect(url_for('game.play_game', game_id=game.id))
+        return redirect(url_for('game.play', game_id=game.id))
 
     return render_template('game/start.html', form=form)
 
+
 @game_bp.route('/play/<int:game_id>', methods=['GET', 'POST'])
 @login_required
-def play_game(game_id):
+def play(game_id):
     """
-    Play the guessing game: submit guesses and receive hints.
+    Show the game play screen and handle guess submissions.
     """
     form = GuessForm()
-    # Filter by player_id instead of user_id
-    game = Game.query.filter_by(id=game_id, player_id=current_user.id).first_or_404()
+    game = Game.query.get_or_404(game_id)
+    message = None
 
     if form.validate_on_submit():
         guess = form.guess.data
@@ -60,28 +59,32 @@ def play_game(game_id):
             game.won = True
             game.finished_at = datetime.utcnow()
             db.session.commit()
-            flash(f"🎉 Correct! You guessed it in {game.attempts} attempts.", "success")
-            return redirect(url_for('game.results', game_id=game.id))
+            flash('🎉 Congratulations! You guessed correctly.', 'success')
+            return redirect(url_for('game.result', game_id=game.id))
 
         if game.attempts >= game.max_attempts:
+            game.won = False
             game.finished_at = datetime.utcnow()
             db.session.commit()
-            flash(f"❌ Out of attempts! The number was {game.target}.", "danger")
-            return redirect(url_for('game.results', game_id=game.id))
+            flash('💥 Game Over! You have used all attempts.', 'danger')
+            return redirect(url_for('game.result', game_id=game.id))
 
-        hint = 'Too low!' if guess < game.target else 'Too high!'
-        attempts_left = game.max_attempts - game.attempts
-        flash(f"{hint} Attempts left: {attempts_left}", "info")
+        message = 'Too low!' if guess < game.target else 'Too high!'
         db.session.commit()
-        return redirect(url_for('game.play_game', game_id=game.id))
 
-    return render_template('game/play.html', game=game, form=form)
+    return render_template(
+        'game/play.html',
+        form=form,
+        game=game,
+        message=message
+    )
 
-@game_bp.route('/results/<int:game_id>')
+
+@game_bp.route('/result/<int:game_id>')
 @login_required
-def results(game_id):
+def result(game_id):
     """
-    Show the game results, including score and target number.
+    Display the result of a completed game.
     """
-    game = Game.query.filter_by(id=game_id, player_id=current_user.id).first_or_404()
-    return render_template('game/results.html', game=game)
+    game = Game.query.get_or_404(game_id)
+    return render_template('game/result.html', game=game)

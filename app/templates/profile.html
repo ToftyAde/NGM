@@ -3,53 +3,96 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-  <div class="container mt-4">
-    <h2>My Profile</h2>
+  <!-- Page Heading -->
+  <h2 class="mb-4">Profile</h2>
 
-    <div class="row mt-3">
-      <div class="col-md-4">
-        <ul class="list-group">
-          <li class="list-group-item">Total Games Played: <strong>{{ total_games }}</strong></li>
-          <li class="list-group-item">Total Wins: <strong>{{ wins }}</strong></li>
-          <li class="list-group-item">Best Score: <strong>{{ best_score }}</strong></li>
-        </ul>
+  <!-- Summary Cards -->
+  <div class="row mb-5">
+    <!-- Games Played -->
+    <div class="col-md-4 mb-3">
+      <div class="card text-center p-3">
+        <div class="card-body">
+          <div style="font-size:1.5rem; color:#0d6efd;">🎯</div>
+          <h6 class="text-muted mt-2">Games Played</h6>
+          <h3>{{ games_played }}</h3>
+        </div>
       </div>
-      <div class="col-md-8">
-        <h4>Recent Games</h4>
-        {% if recent_games %}
-          <table class="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Level</th>
-                <th>Attempts</th>
-                <th>Score</th>
-                <th>Result</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for game in recent_games %}
-                <tr>
-                  <td>{{ loop.index }}</td>
-                  <td>{{ game.level }}</td>
-                  <td>{{ game.attempts }} / {{ game.max_attempts }}</td>
-                  <td>{{ game.score }}</td>
-                  <td>{{ 'Won' if game.won else 'Lost' }}</td>
-                  <td>
-                    {% if game.finished_at %}
-                      {{ game.finished_at.strftime('%Y-%m-%d %H:%M') }}
-                    {% else %}
-                      N/A
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        {% else %}
-          <p>No games played yet. <a href="{{ url_for('game.start_game') }}">Start one now</a>!</p>
-        {% endif %}
+    </div>
+    <!-- Best Score -->
+    <div class="col-md-4 mb-3">
+      <div class="card text-center p-3">
+        <div class="card-body">
+          <div style="font-size:1.5rem; color:#ffc107;">🏆</div>
+          <h6 class="text-muted mt-2">Best Score</h6>
+          <h3>{{ best_score }} attempts</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Average -->
+    <div class="col-md-4 mb-3">
+      <div class="card text-center p-3">
+        <div class="card-body">
+          <div style="font-size:1.5rem; color:#28a745;">📊</div>
+          <h6 class="text-muted mt-2">Average</h6>
+          <h3>{{ average_attempts }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Achievements -->
+    <div class="col-lg-6 mb-4">
+      <div class="card p-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span style="font-size:1.4rem; color:#6f42c1;">🎖️</span>
+            Achievements
+          </h5>
+          <ul class="list-group list-group-flush mt-3">
+            {% for ach in achievements %}
+              <li class="list-group-item d-flex align-items-center">
+                <span style="font-size:1.3rem; margin-right:1rem;">{{ ach.emoji }}</span>
+                <div>
+                  <div class="font-weight-bold">{{ ach.title }}</div>
+                  <div class="text-muted small">{{ ach.description }}</div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Games -->
+    <div class="col-lg-6 mb-4">
+      <div class="card p-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span style="font-size:1.4rem; color:#0d6efd;">⏱️</span>
+            Recent Games
+          </h5>
+          <ul class="list-group list-group-flush mt-3">
+            {% for game in recent_games %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <span 
+                    class="badge badge-pill 
+                      {% if game.level=='easy'   %}badge-success
+                      {% elif game.level=='medium'%}badge-warning
+                      {% else                 %}badge-danger
+                      {% endif %}
+                    text-capitalize"
+                  >
+                    {{ game.level }}
+                  </span>
+                  {{ game.attempts }} attempts
+                </div>
+                <small class="text-muted">{{ game.date }}</small>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </div>
   </div>

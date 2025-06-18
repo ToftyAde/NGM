@@ -3,31 +3,63 @@
 {% block title %}Play Game{% endblock %}
 
 {% block content %}
-  <div class="container mt-4">
-    <h2>Guess the Number (Level: {{ game.level }})</h2>
+  <h2 class="mb-4">Number Guessing Game – {{ game.level.capitalize() }}</h2>
 
-    {# Flash messages for hints and errors #}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, msg in messages %}
-          <div class="alert alert-{{ category }}" role="alert">
-            {{ msg }}
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
+  <div class="row">
+    <!-- Main Game Area -->
+    <div class="col-lg-8 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <!-- Attempts & Range -->
+          <p class="mb-2"><strong>Attempts:</strong> {{ game.attempts }} / {{ game.max_attempts }}</p>
+          <p class="mb-4"><strong>Range:</strong> 0 – {{ game.max_range }}</p>
 
-    <p>Attempts: {{ game.attempts }} / {{ game.max_attempts }}</p>
+          {# Flash messages for hints and outcomes #}
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, msg in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ msg }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
 
-    <form method="post">
-      {{ form.hidden_tag() }}
+          <form method="post">
+            {{ form.hidden_tag() }}
 
-      <div class="form-group">
-        {{ form.guess.label(class="form-label") }}
-        {{ form.guess(class="form-control", placeholder="Enter your guess...") }}
+            <div class="form-group">
+              {{ form.guess.label(class="font-weight-bold") }}
+              {{ form.guess(class="form-control form-control-lg", placeholder="Enter your guess…") }}
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block mt-3">
+              Submit Guess
+            </button>
+          </form>
+        </div>
       </div>
+    </div>
 
-      <button type="submit" class="btn btn-success mt-3">Submit Guess</button>
-    </form>
+    <!-- Guess History -->
+    <div class="col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Guess History</h5>
+          {% if game.history %}
+            <ul class="list-group list-group-flush">
+              {% for g in game.history %}
+                <li class="list-group-item">{{ g }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted mb-0">No guesses yet.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

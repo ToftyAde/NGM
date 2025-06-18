@@ -2,15 +2,13 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models.game import Game
-from app.routes.forms import ContactForm
+from app.forms.forms import ContactForm  # import from consolidated forms module
 
-# Blueprint for main application routes
-define_blueprint = "main_bp = Blueprint('main', __name__)"
 main_bp = Blueprint('main', __name__)
 
 @main_bp.context_processor
 def inject_current_user():
-    # Make current_user available in templates
+    # Make current_user available in all templates
     return dict(current_user=current_user)
 
 @main_bp.route('/')

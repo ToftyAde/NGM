@@ -3,75 +3,40 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <!-- Hero Section -->
-  <div class="hero text-center">
-    <img
-      src="{{ url_for('static', filename='images/ngg_banner.png') }}"
-      alt="NGG Number Guessing Game Banner"
-      class="img-fluid mb-4"
-    >
-    <h1>Welcome to NGG!</h1>
-    <p>Test your luck and see how quickly you can guess the secret number.</p>
-    <a class="btn btn-primary btn-lg" href="{{ url_for('game.start_game') }}" role="button">Play Now</a>
+  <!-- Page Heading -->
+  <h2 class="mb-4">Welcome to NGG Number Guessing Game!</h2>
+
+  <!-- How to Play Card -->
+  <div class="card-howto mb-5">
+    <h3>How to Play</h3>
+    <ul>
+      <li>Choose your difficulty level</li>
+      <li>Guess the number within the given range</li>
+      <li>Receive hints after each guess</li>
+      <li>Try to guess in as few attempts as possible</li>
+      <li>Compete with others on the leaderboard</li>
+    </ul>
   </div>
 
-  <!-- Difficulty Levels Section -->
-  <div class="section">
-    <h3>Difficulty Levels</h3>
-    <div class="d-flex align-items-center mb-3">
-      <img
-        src="{{ url_for('static', filename='images/low_icon.png') }}"
-        alt="Low Difficulty"
-        class="mr-2"
-        style="width:48px; height:48px;"
-      >
-      <span>Low (0–99): 10 attempts</span>
+  <!-- Difficulty Mode Cards -->
+  <div class="card-grid">
+    <!-- Easy -->
+    <div class="mode-card">
+      <div class="title">Easy Mode</div>
+      <div class="range">Range: 0–99</div>
+      <a href="{{ url_for('game.start_game', level='easy') }}" class="btn green">Start Easy</a>
     </div>
-    <div class="d-flex align-items-center mb-3">
-      <img
-        src="{{ url_for('static', filename='images/moderate_icon.png') }}"
-        alt="Moderate Difficulty"
-        class="mr-2"
-        style="width:48px; height:48px;"
-      >
-      <span>Moderate (0–999): 10 attempts</span>
+    <!-- Medium -->
+    <div class="mode-card">
+      <div class="title">Medium Mode</div>
+      <div class="range">Range: 0–999</div>
+      <a href="{{ url_for('game.start_game', level='medium') }}" class="btn yellow">Start Medium</a>
     </div>
-    <div class="d-flex align-items-center mb-3">
-      <img
-        src="{{ url_for('static', filename='images/expert_icon.png') }}"
-        alt="Expert Difficulty"
-        class="mr-2"
-        style="width:48px; height:48px;"
-      >
-      <span>Expert (0–9999): 10 attempts</span>
-    </div>
-  </div>
-
-  <!-- Divider Icon -->
-  <div class="divider text-center my-4">
-    <img
-      src="{{ url_for('static', filename='images/divider_icon.svg') }}"
-      alt="Section Divider"
-      style="width:200px; opacity:0.5;"
-    >
-  </div>
-
-  <!-- Main Action Links -->
-  <div class="section row">
-    <div class="col-md-4">
-      <h3>Leaderboard</h3>
-      <p>See the top players and their scores.</p>
-      <a href="{{ url_for('main.leaderboard') }}" class="btn btn-secondary">View Leaderboard</a>
-    </div>
-    <div class="col-md-4">
-      <h3>Profile</h3>
-      <p>Manage your account and settings.</p>
-      <a href="{{ url_for('user.profile') }}" class="btn btn-secondary">Your Profile</a>
-    </div>
-    <div class="col-md-4">
-      <h3>Contact</h3>
-      <p>Have feedback or need help? Reach out to us.</p>
-      <a href="{{ url_for('main.contact') }}" class="btn btn-secondary">Contact Us</a>
+    <!-- Expert -->
+    <div class="mode-card">
+      <div class="title">Expert Mode</div>
+      <div class="range">Range: 0–9 999</div>
+      <a href="{{ url_for('game.start_game', level='expert') }}" class="btn red">Start Expert</a>
     </div>
   </div>
 {% endblock %}

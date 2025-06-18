@@ -1,4 +1,24 @@
-/* Global Reset */
+/* ==========================================================================
+   Global Reset & Variables
+   ========================================================================== */
+
+:root {
+  --sidebar-width: 260px;
+  --sidebar-bg: #ffffff;
+  --sidebar-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  --bg-light: #f5f5f5;
+  --text-dark: #2c2c2c;
+  --text-muted: #6c757d;
+  --card-bg: #ffffff;
+  --green: #28a745;
+  --green-hover: #218838;
+  --yellow: #ffc107;
+  --yellow-hover: #e0a800;
+  --red: #dc3545;
+  --red-hover: #c82333;
+  --primary-blue: #0d6efd;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,231 +26,328 @@
 }
 
 body {
+  display: flex;
+  min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  color: #2c2c2c;
-  background: #f5f5f5;
+  background: var(--bg-light);
+  color: var(--text-dark);
   line-height: 1.6;
 }
 
-a {
-  text-decoration: none;
-  color: #ff6f61;
-  transition: color 0.3s;
-}
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
 
-a:hover {
-  color: #e65b50;
-}
-
-/* Container Full-Width Override */
-.container {
-  width: 100%;
-  max-width: 100%;
-  padding: 0 2rem;
-  margin: 0 auto;
-}
-
-/* Navbar */
-.navbar {
-  background: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-.navbar .navbar-brand {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: #2c2c2c !important;
-}
-.navbar-nav {
-  display: flex;
-  flex-direction: row;
-}
-.navbar .navbar-nav .nav-link {
-  color: #555 !important;
-  margin: 0 1rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.navbar .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .active > .nav-link {
-  color: #ff6f61 !important;
-}
-
-/* Hero Section (Home Page) */
-.hero {
-  background: #ff6f61;
-  color: #ffffff;
-  padding: 4rem 2rem;
-  text-align: center;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  position: relative;
-}
-.hero img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto 1.5rem;
-}
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-.hero p {
-  font-size: 1.25rem;
-  max-width: 800px;
-  margin: 0 auto 1.5rem;
-}
-.hero .btn {
-  background: #2c2c2c;
-  color: #ffffff;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  transition: background 0.3s;
-  display: inline-block;
-  margin-top: 1rem;
-}
-.hero .btn:hover {
-  background: #1f1f1f;
-}
-
-/* Section Background Pattern */
-.section {
-  position: relative;
-  background: #ffffff url('../images/section_pattern.svg') repeat;
-  border-radius: 8px;
-  padding: 2rem 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-}
-
-/* Difficulty Icons Alignment */
-.section .d-flex img {
-  width: 48px;
-  height: 48px;
-  margin-right: 12px;
-}
-
-/* Divider Icon */
-.divider {
-  text-align: center;
-  margin: 2rem 0;
-}
-.divider img {
-  width: 200px;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* Headings & Text */
-h1, h2, h3, h4 {
-  margin-bottom: 1rem;
-  color: #2c2c2c;
-}
-p {
-  margin-bottom: 1rem;
-}
-
-/* Buttons */
-.btn {
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-weight: 600;
-  transition: background 0.3s ease;
-}
-.btn-primary {
-  background: #ff6f61;
-  border: none;
-  color: #fff;
-}
-.btn-primary:hover {
-  background: #e65b50;
-}
-.btn-secondary {
-  background: #2c2c2c;
-  border: none;
-  color: #fff;
-}
-.btn-secondary:hover {
-  background: #1f1f1f;
-}
-
-/* Cards & Game Containers */
-.card, .game-container {
-  background: #ffffff;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  box-shadow: var(--sidebar-shadow);
   padding: 1.5rem;
-  margin-top: 1rem;
+  position: fixed;
+  top: 0;
+  bottom: 0;
 }
 
-/* Tables */
-.table {
-  width: 100%;
-  background: #ffffff;
-  border-collapse: collapse;
+.sidebar h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
   margin-bottom: 2rem;
-}
-.table thead {
-  background: #2c2c2c;
-}
-.table thead th {
-  color: #fff;
-  padding: 1rem;
-}
-.table th, .table td {
-  padding: 1rem;
-  text-align: left;
-  vertical-align: middle;
-  border-bottom: 1px solid #eee;
-}
-.table-hover tbody tr:hover {
-  background: #f9f9f9;
+  color: var(--text-dark);
 }
 
-/* Forms */
-.form-control {
-  padding: 0.75rem 1rem;
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
-.form-control:focus {
-  border-color: #ff6f61;
-  box-shadow: 0 0 0 0.2rem rgba(255, 111, 97, 0.25);
+
+.sidebar nav a i,
+.sidebar nav a svg {
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
 }
-.form-group {
+
+.sidebar nav a:hover {
+  background: rgba(13, 110, 253, 0.1);
+  transform: translateX(4px);
+  color: var(--primary-blue);
+}
+
+.sidebar nav a.active {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 2rem;
+  width: calc(100% - var(--sidebar-width));
+  overflow-y: auto;
+}
+
+h2 {
+  font-size: 2rem;
   margin-bottom: 1.5rem;
 }
 
-/* Alerts */
-.alert {
-  border-radius: 4px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-}
-.alert-success {
-  background-color: #e6f4ea;
-  color: #1b4620;
-  border: 1px solid #b0d5ad;
-}
-.alert-danger {
-  background-color: #fdecea;
-  color: #611a15;
-  border: 1px solid #f5c6cb;
+/* ==========================================================================
+   Card Base Styles
+   ========================================================================== */
+
+.card {
+  background: var(--card-bg);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
 }
 
-/* Footer */
-.footer {
-  background: transparent;
+.card.p-4 {
+  padding: 1.5rem;
+}
+
+/* ==========================================================================
+   “How to Play” Card
+   ========================================================================== */
+
+.card-howto {
+  padding: 1.5rem;
+}
+
+.card-howto h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.card-howto ul {
+  list-style: disc inside;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Difficulty Cards Grid
+   ========================================================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.mode-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 2rem 0;
-  color: #555;
-  font-size: 0.9rem;
+}
+
+.mode-card .title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.mode-card .range {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.mode-card .btn {
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 50rem;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  margin-top: auto;
+}
+
+.mode-card .btn.green { background: var(--green); }
+.mode-card .btn.green:hover { background: var(--green-hover); }
+.mode-card .btn.yellow { background: var(--yellow); }
+.mode-card .btn.yellow:hover { background: var(--yellow-hover); }
+.mode-card .btn.red { background: var(--red); }
+.mode-card .btn.red:hover { background: var(--red-hover); }
+
+/* ==========================================================================
+   Forms & Inputs
+   ========================================================================== */
+
+.form-control,
+.form-control-lg {
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.form-control-lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+}
+
+.input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-append .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* ==========================================================================
+   Form Checks & Radios
+   ========================================================================== */
+
+.form-check-input {
+  margin-top: 0.3rem;
+}
+
+.form-check-label {
+  margin: 0;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Lists & Badges
+   ========================================================================== */
+
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #eee;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.badge-success { background-color: var(--green); }
+.badge-warning { background-color: var(--yellow); color: #212529; }
+.badge-danger  { background-color: var(--red); }
+
+/* ==========================================================================
+   Profile Summary Cards
+   ========================================================================== */
+
+.summary-card {
+  padding: 1rem;
+  text-align: center;
+}
+
+.summary-card .emoji {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.summary-card h6 {
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.summary-card h3 {
+  font-size: 1.75rem;
+}
+
+/* ==========================================================================
+   Achievements & Recent Games
+   ========================================================================== */
+
+.achievements .list-group-item,
+.recent-games .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.achievements .list-group-item span {
+  font-size: 1.3rem;
+  margin-right: 1rem;
+}
+
+/* ==========================================================================
+   Star Rating (Feedback)
+   ========================================================================== */
+
+#star-rating .star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+
+#star-rating .star i {
+  font-size: 1.5rem;
+  color: var(--yellow);
+  transition: transform 0.2s;
+}
+
+#star-rating .star:hover i {
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
+   Toggle Password Button
+   ========================================================================== */
+
+.toggle-password {
+  background: none;
+  border: none;
+  padding: 0 0.5rem;
+}
+
+.toggle-password i {
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.toggle-password:hover i {
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.text-center { text-align: center; }
+.mt-auto      { margin-top: auto; }
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .main-content {
+    margin: 0;
+    width: 100%;
+  }
 }

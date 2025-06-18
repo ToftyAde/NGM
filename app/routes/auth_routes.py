@@ -1,10 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
-from app.forms.register_form import RegisterForm
-from app.forms.login_form import LoginForm
+from app.forms.forms import RegisterForm, LoginForm, ForgotPasswordForm
 from app.models.user import User
-from app.extensions import db
-from app.extensions import bcrypt
+from app.extensions import db, bcrypt
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -26,21 +24,24 @@ def register():
         db.session.commit()
         flash("Registration successful! You can now log in.", "success")
         return redirect(url_for('auth.login'))
+
     return render_template('register.html', form=form)
 
-# ✅ Login
+
+# ✅ Login (by email now)
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('Login successful!', 'success')
-            return redirect(url_for('user.profile'))  # Replace with desired route
-        else:
-            flash('Invalid username or password.', 'danger')
+            return redirect(url_for('user.profile'))  # or wherever you want
+        flash('Invalid email or password.', 'danger')
+
     return render_template('login.html', form=form)
+
 
 # ✅ Logout
 @auth_bp.route('/logout')
@@ -49,3 +50,16 @@ def logout():
     logout_user()
     flash("You have been logged out.", "info")
     return redirect(url_for('auth.login'))
+
+
+# ✅ Forgot Password
+@auth_bp.route('/forgot-password', methods=['GET', 'POST'], endpoint='forgot_password')
+def forgot_password():
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        # TODO: generate a reset token and send an email
+        flash('If that email exists, you’ll receive password reset instructions.', 'info')
+        return redirect(url_for('auth.login'))
+
+    return render_template('forgot_password.html', form=form)

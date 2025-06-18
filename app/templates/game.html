@@ -3,28 +3,69 @@
 {% block title %}Play Game{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center mt-4">
-  <div class="col-md-6">
-    <h2 class="mb-3">Number Guessing Game</h2>
-
-    <p>Guess a number between 1 and 100</p>
-    <p>Attempts: {{ attempts }} / {{ max_attempts }}</p>
-
-    <form method="POST">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        <input type="number" name="guess" class="form-control" placeholder="Enter your guess" required min="1" max="100">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit Guess</button>
-    </form>
-
-    {% if message %}
-      <div class="alert alert-info mt-3">
-        {{ message }}
-      </div>
-    {% endif %}
-
-    <p class="mt-4"><a href="{{ url_for('user.profile') }}" class="btn btn-secondary">Back to Profile</a></p>
+  <!-- Header + Difficulty Selector -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Number Guessing Game</h2>
+    <div class="btn-group" role="group" aria-label="Difficulty levels">
+      <a href="{{ url_for('game.start_game', level='easy') }}"
+         class="btn {% if level=='easy' %}btn-primary{% else %}btn-secondary{% endif %}">
+        Easy (0–99)
+      </a>
+      <a href="{{ url_for('game.start_game', level='medium') }}"
+         class="btn {% if level=='medium' %}btn-primary{% else %}btn-secondary{% endif %}">
+        Medium (0–999)
+      </a>
+      <a href="{{ url_for('game.start_game', level='expert') }}"
+         class="btn {% if level=='expert' %}btn-primary{% else %}btn-secondary{% endif %}">
+        Expert (0–9999)
+      </a>
+    </div>
   </div>
-</div>
+
+  <div class="row">
+    <!-- Main Game Card -->
+    <div class="col-lg-8 mb-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <p class="mb-1"><strong>Attempts:</strong> {{ attempts }} / {{ max_attempts }}</p>
+          <p class="mb-3"><strong>Range:</strong> {{ min_range }} to {{ max_range }}</p>
+
+          <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              {{ form.guess(class="form-control form-control-lg", placeholder="Enter your guess…") }}
+            </div>
+            <button type="submit"
+                    class="btn btn-primary btn-block btn-lg mt-3">
+              Submit Guess
+            </button>
+          </form>
+
+          {% if message %}
+            <div class="alert alert-info mt-3">
+              {{ message }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Guess History Card -->
+    <div class="col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Guess History</h5>
+          {% if history %}
+            <ul class="list-group list-group-flush">
+              {% for entry in history %}
+                <li class="list-group-item">{{ entry }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted mb-0">No guesses yet</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

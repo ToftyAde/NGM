@@ -1,27 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}Contact{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-8">
-    <h2>Contact Us</h2>
-    <form method="POST" action="{{ url_for('main.contact') }}">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.name.label(class_='form-label') }}
-        {{ form.name(class_='form-control', placeholder='Your Name') }}
-      </div>
-      <div class="form-group">
-        {{ form.email.label(class_='form-label') }}
-        {{ form.email(class_='form-control', placeholder='Your Email') }}
-      </div>
-      <div class="form-group">
-        {{ form.message.label(class_='form-label') }}
-        {{ form.message(class_='form-control', rows=5, placeholder='Your Message') }}
-      </div>
-      <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
+  <!-- Page Heading -->
+  <h2 class="mb-4">Contact Us</h2>
+
+  <!-- Contact Form Card -->
+  <div class="card p-4 mb-5">
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('main.contact') }}">
+        {{ form.hidden_tag() }}
+
+        <!-- Name & Email Row -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            {{ form.name.label(class="font-weight-bold") }}
+            {{ form.name(class="form-control form-control-lg", placeholder="Your name") }}
+          </div>
+          <div class="form-group col-md-6">
+            {{ form.email.label(class="font-weight-bold") }}
+            {{ form.email(class="form-control form-control-lg", placeholder="your.email@example.com") }}
+          </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="form-group">
+          {{ form.subject.label(class="font-weight-bold") }}
+          {{ form.subject(class="form-control form-control-lg", placeholder="What is this about?") }}
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          {{ form.message.label(class="font-weight-bold") }}
+          {{ form.message(class="form-control form-control-lg", rows="6", placeholder="Your message here…") }}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-lg">
+          <i class="bi bi-send mr-2"></i> Send Message
+        </button>
+      </form>
+    </div>
   </div>
-</div>
 {% endblock %}

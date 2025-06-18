@@ -1,13 +1,70 @@
 {% extends "base.html" %}
 
-{% block title %}Feedback Received{% endblock %}
+{% block title %}Feedback{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center mt-4">
-  <div class="col-md-8">
-    <h2 class="mb-4">Thank You!</h2>
-    <p>Your feedback has been successfully submitted. We appreciate you getting in touch and will respond as soon as possible.</p>
-    <a href="{{ url_for('main.home') }}" class="btn btn-primary mt-3">Return to Home</a>
+  <h2 class="mb-4">Feedback</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card p-4">
+        <form method="POST" action="{{ url_for('main.feedback') }}">
+          {{ form.hidden_tag() }}
+
+          <!-- Star Rating -->
+          <div class="form-group">
+            <label class="font-weight-bold">How would you rate your experience?</label>
+            <div id="star-rating" class="mb-3">
+              {% for i in range(1,6) %}
+                <button type="button" class="btn btn-link p-0 star" data-value="{{ i }}">
+                  <i class="bi bi-star" style="font-size: 1.5rem;"></i>
+                </button>
+              {% endfor %}
+            </div>
+            <input type="hidden" id="rating-input" name="rating">
+          </div>
+
+          <!-- Category -->
+          <div class="form-group">
+            {{ form.category.label(class="font-weight-bold") }}
+            {{ form.category(class="form-control form-control-lg") }}
+          </div>
+
+          <!-- Feedback Text -->
+          <div class="form-group">
+            {{ form.feedback.label('Your Feedback', class="font-weight-bold") }}
+            {{ form.feedback(class="form-control form-control-lg", rows="5", placeholder="Tell us what you think…") }}
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-chat-left-text mr-2"></i> Submit Feedback
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
-</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    // Star-rating interactivity
+    const stars = document.querySelectorAll('#star-rating .star');
+    const ratingInput = document.getElementById('rating-input');
+    stars.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = parseInt(btn.dataset.value);
+        ratingInput.value = val;
+        stars.forEach(s => {
+          const icon = s.querySelector('i');
+          if (parseInt(s.dataset.value) <= val) {
+            icon.classList.replace('bi-star', 'bi-star-fill');
+          } else {
+            icon.classList.replace('bi-star-fill', 'bi-star');
+          }
+        });
+      });
+    });
+  </script>
 {% endblock %}
