@@ -36,7 +36,7 @@
       <a href="{{ url_for('main.leaderboard') }}" class="nav-link {% if active=='leaderboard' %}active{% endif %}">
         <i class="bi bi-trophy-fill"></i> Leaderboard
       </a>
-      <a href="{{ url_for('user.profile') }}" class="nav-link {% if active=='profile' %}active{% endif %}">
+      <a href="{{ url_for('user_routes.profile') }}" class="nav-link {% if active=='profile' %}active{% endif %}">
         <i class="bi bi-person-fill"></i> Profile
       </a>
       <a href="{{ url_for('main.contact') }}" class="nav-link {% if active=='contact' %}active{% endif %}">
@@ -48,7 +48,7 @@
 
       {% if current_user.is_authenticated %}
         {% if current_user.is_admin %}
-          <a href="{{ url_for('admin.admin_dashboard') }}" class="nav-link {% if active=='admin' %}active{% endif %}">
+          <a href="{{ url_for('admin.index') }}" class="nav-link {% if active=='admin' %}active{% endif %}">
             <i class="bi bi-tools"></i> Admin
           </a>
         {% endif %}

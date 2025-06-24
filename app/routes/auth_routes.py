@@ -37,7 +37,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('Login successful!', 'success')
-            return redirect(url_for('user.profile'))  # or wherever you want
+            return redirect(url_for('user_routes.profile'))  # fixed endpoint
         flash('Invalid email or password.', 'danger')
 
     return render_template('login.html', form=form)
@@ -59,7 +59,7 @@ def forgot_password():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         # TODO: generate a reset token and send an email
-        flash('If that email exists, you’ll receive password reset instructions.', 'info')
+        flash("If that email exists, you'll receive password reset instructions.", 'info')
         return redirect(url_for('auth.login'))
 
     return render_template('forgot_password.html', form=form)

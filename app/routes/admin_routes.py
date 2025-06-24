@@ -1,7 +1,1 @@
-from flask import Blueprint
-
-admin_bp = Blueprint('admin', __name__)
-
-@admin_bp.route('/admin')
-def admin_dashboard():
-    return "Admin Dashboard"
+# Custom admin routes removed. Flask-Admin is now the only admin panel.

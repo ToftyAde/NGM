@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from app.extensions import db, bcrypt, login_manager, migrate
+from app.admin import init_admin
 
 
 def create_app():
@@ -27,6 +28,9 @@ def create_app():
     bcrypt.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
+    
+    # Admin setup
+    init_admin(app)
 
     # User loader callback for Flask-Login
     from app.models.user import User
@@ -39,13 +43,11 @@ def create_app():
     from app.routes.auth_routes import auth_bp
     from app.routes.game_routes import game_bp
     from app.routes.user_routes import user_bp
-    from app.routes.admin_routes import admin_bp
     from app.routes.main_routes import main_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(game_bp, url_prefix='/game')
     app.register_blueprint(user_bp, url_prefix='/user')
-    app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(main_bp)
 
     return app

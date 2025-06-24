@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from sqlalchemy import desc, func
 from app.models.game import Game
 
-user_bp = Blueprint('user', __name__)
+user_bp = Blueprint('user_routes', __name__)
 
 @user_bp.route('/profile')
 @login_required
