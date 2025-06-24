@@ -21,19 +21,29 @@
                 </button>
               {% endfor %}
             </div>
-            <input type="hidden" id="rating-input" name="rating">
+            <!-- Bind hidden input to the form.rating field -->
+            {{ form.rating(id="rating-input", type="hidden") }}
+            {% for error in form.rating.errors %}
+              <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
           </div>
 
           <!-- Category -->
           <div class="form-group">
             {{ form.category.label(class="font-weight-bold") }}
             {{ form.category(class="form-control form-control-lg") }}
+            {% for error in form.category.errors %}
+              <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
           </div>
 
           <!-- Feedback Text -->
           <div class="form-group">
             {{ form.feedback.label('Your Feedback', class="font-weight-bold") }}
             {{ form.feedback(class="form-control form-control-lg", rows="5", placeholder="Tell us what you think…") }}
+            {% for error in form.feedback.errors %}
+              <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
           </div>
 
           <!-- Submit -->

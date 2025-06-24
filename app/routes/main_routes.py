@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from app.models.game import Game
-from app.forms.forms import ContactForm  # import from consolidated forms module
+from app.forms.forms import ContactForm, FeedbackForm  # import from consolidated forms module
 
 main_bp = Blueprint('main', __name__)
 
@@ -45,9 +45,12 @@ def contact():
         return redirect(url_for('main.feedback'))
     return render_template('contact.html', form=form)
 
-@main_bp.route('/feedback')
+@main_bp.route('/feedback', methods=['GET', 'POST'])
 def feedback():
-    """
-    Feedback received page.
-    """
-    return render_template('feedback.html')
+    form = FeedbackForm()
+
+    if form.validate_on_submit():
+        flash("Thank you for your feedback!", "success")
+        return redirect(url_for('main.feedback'))
+
+    return render_template('feedback.html', form=form)
