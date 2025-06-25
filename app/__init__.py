@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from app.extensions import db, bcrypt, login_manager, migrate
+from app.extensions import db, login_manager, migrate
 from app.admin import init_admin
 
 
@@ -15,7 +15,7 @@ def create_app():
         static_url_path='/static',
         template_folder=os.path.join(os.path.dirname(__file__), 'templates')
     )
-    app.config['SECRET_KEY'] = 'your_secret_key'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev_secret_key')  # Set SECRET_KEY in environment for production
 
     # SQLite database path in project_root/database/app.db
     db_path = os.path.join(project_root, 'database', 'app.db')
@@ -25,7 +25,6 @@ def create_app():
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
-    bcrypt.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
     

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
 from app.forms.forms import RegisterForm, LoginForm, ForgotPasswordForm
 from app.models.user import User
-from app.extensions import db, bcrypt
+from app.extensions import db
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -35,7 +35,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember_me.data)
             flash('Login successful!', 'success')
             return redirect(url_for('user_routes.profile'))  # fixed endpoint
         flash('Invalid email or password.', 'danger')
